@@ -8,6 +8,7 @@ import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.InstreamVideoAdView;
+import com.facebook.ads.RewardData;
 import com.facebook.ads.RewardedVideoAd;
 import com.facebook.ads.RewardedVideoAdListener;
 
@@ -54,9 +55,14 @@ class FacebookRewardedVideoAdPlugin implements MethodChannel.MethodCallHandler,
 
     private boolean loadAd(HashMap args) {
         final String placementId = (String) args.get("id");
+        final String userId = (String) args.get("userId");
+        final String currency = (String) args.get("currency");
 
         if (rewardedVideoAd == null) {
             rewardedVideoAd = new RewardedVideoAd(context, placementId);
+            if (userId != null || currency != null) {
+                rewardedVideoAd.setRewardData(new RewardData(userId, currency));
+            }
             rewardedVideoAd.setAdListener(this);
         }
         try {
