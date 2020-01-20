@@ -38,14 +38,10 @@ class FacebookBannerAdView implements PlatformView, AdListener {
     private final AdView adView;
     private final MethodChannel channel;
 
-//    private final boolean isDisposable;
-
     FacebookBannerAdView(Context context, int id, HashMap args, BinaryMessenger messenger) {
 
         channel = new MethodChannel(messenger,
                 FacebookConstants.BANNER_AD_CHANNEL + "_" + id);
-
-//        isDisposable = (boolean) args.get("dispose");
 
         adView = new AdView(context,
                 (String) args.get("id"),
@@ -74,12 +70,11 @@ class FacebookBannerAdView implements PlatformView, AdListener {
 
     @Override
     public void dispose() {
-//        if (adView != null && isDisposable)
-//        {
-//            Log.d("FacebookBannerAdPlugin", "Banner Ad disposed");
-//            adView.setAdListener(null);
-//            adView.destroy();
-//        }
+        if (adView != null) {
+            Log.d("FacebookBannerAdPlugin", "Banner Ad disposed");
+            adView.setAdListener(null);
+            adView.destroy();
+        }
     }
 
     @Override

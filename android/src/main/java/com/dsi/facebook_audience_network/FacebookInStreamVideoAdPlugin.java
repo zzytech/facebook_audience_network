@@ -56,11 +56,10 @@ class FacebookInStreamVideoAdView implements PlatformView, InstreamVideoAdListen
 
     @Override
     public void dispose() {
-//        if (adView != null)
-//        {
-//            adView.setAdListener(null);
-//            adView.destroy();
-//        }
+        if (adView != null) {
+            adView.setAdListener(null);
+            adView.destroy();
+        }
     }
 
     private AdSize getSize(HashMap args) {

@@ -122,7 +122,14 @@ class FacebookNativeAdView implements PlatformView, NativeAdListener {
 
     @Override
     public void dispose() {
-
+        if (bannerAd != null) {
+            bannerAd.setAdListener(null);
+            bannerAd.destroy();
+        }
+        if (nativeAd != null) {
+            nativeAd.setAdListener(null);
+            nativeAd.destroy();
+        }
     }
 
     @Override
