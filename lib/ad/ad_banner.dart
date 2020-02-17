@@ -107,7 +107,7 @@ class _FacebookBannerAdState extends State<FacebookBannerAd>
       );
     } else if (Platform.isIOS) {
       return Container(
-        height: containerHeight,
+        height: widget.bannerSize.height.toDouble(),
         color: Colors.transparent,
         child: UiKitView(
           viewType: BANNER_AD_CHANNEL,
