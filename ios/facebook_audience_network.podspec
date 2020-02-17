@@ -15,7 +15,8 @@ Facebook Audience Network plugin for Flutter application
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-
   s.ios.deployment_target = '8.0'
+  s.dependency 'FBAudienceNetwork'
+  s.static_framework = true
 end
 
