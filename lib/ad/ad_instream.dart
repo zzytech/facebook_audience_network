@@ -2,6 +2,7 @@ import 'package:meta/meta.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:io' show Platform;
 
 import 'package:facebook_audience_network/constants.dart';
 
@@ -57,7 +58,7 @@ class FacebookInStreamVideoAd extends StatefulWidget {
 class _FacebookInStreamVideoAdState extends State<FacebookInStreamVideoAd> {
   @override
   Widget build(BuildContext context) {
-    if (defaultTargetPlatform == TargetPlatform.android) {
+    if (Platform.isAndroid) {
       return Container(
         width: widget.width,
         height: widget.height == double.infinity
@@ -81,7 +82,7 @@ class _FacebookInStreamVideoAdState extends State<FacebookInStreamVideoAd> {
           ),
         ),
       );
-    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+    } else if (Platform.isIOS) {
       //TODO: Implement BannerAd for iOS once supported.
       return Container(
         width: widget.width,

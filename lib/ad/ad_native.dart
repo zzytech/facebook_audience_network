@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:io' show Platform;
 
 import 'package:facebook_audience_network/constants.dart';
 
@@ -122,7 +123,7 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
 
   @override
   Widget build(BuildContext context) {
-    if (defaultTargetPlatform == TargetPlatform.android) {
+    if (Platform.isAndroid) {
       return Container(
         width: widget.width,
         height: widget.adType == NativeAdType.NATIVE_AD
@@ -160,11 +161,44 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
           },
         ),
       );
-    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+    } else if (Platform.isIOS) {
       return Container(
+        height: widget.adType == NativeAdType.NATIVE_AD
+            ? (isLoadStart ? widget.height : containerHeight)
+            : widget.bannerAdSize.height.toDouble(),
         width: widget.width,
-        height: widget.height,
-        child: Text("Native Ads iOS is currently not supported."),
+        color: Colors.transparent,
+        child: UiKitView(
+          viewType: NATIVE_AD_CHANNEL,
+          onPlatformViewCreated: _onNativeAdViewCreated,
+          creationParamsCodec: StandardMessageCodec(),
+          creationParams: <String, dynamic>{
+            "id": widget.placementId,
+            "banner_ad":
+            widget.adType == NativeAdType.NATIVE_BANNER_AD ? true : false,
+            // height param is only for Banner Ads. Native Ad's height is
+            // governed by container.
+            "height": widget.bannerAdSize.height,
+            "bg_color": widget.backgroundColor == null
+                ? null
+                : _getHexStringFromColor(widget.backgroundColor),
+            "title_color": widget.titleColor == null
+                ? null
+                : _getHexStringFromColor(widget.titleColor),
+            "desc_color": widget.descriptionColor == null
+                ? null
+                : _getHexStringFromColor(widget.descriptionColor),
+            "button_color": widget.buttonColor == null
+                ? null
+                : _getHexStringFromColor(widget.buttonColor),
+            "button_title_color": widget.buttonTitleColor == null
+                ? null
+                : _getHexStringFromColor(widget.buttonTitleColor),
+            "button_border_color": widget.buttonBorderColor == null
+                ? null
+                : _getHexStringFromColor(widget.buttonBorderColor),
+          },
+        ),
       );
     } else {
       return Container(
